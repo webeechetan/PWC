@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Admin;
 
-class authController extends Controller
-{
+class authController extends Controller {
     public function index() {
         // dd(Crypt::encryptString('9Dw@zt;D'));
         // dd(Crypt::decryptString('eyJpdiI6Ilg5azVzN0hhcFg4bG1GdXkxTGZMclE9PSIsInZhbHVlIjoiVnIya1JqTnVRZVFscmxyaVJwMDBzZz09IiwibWFjIjoiNWFjZGZjYzFlZjdhNzkzM2U2MTQzZTAwYWUzMjE5YTZhZTE3YmQwYzNhNTEwYTFiZjM1ZDc0ZTIxYmJkMDIxMyIsInRhZyI6IiJ9'));
@@ -20,14 +19,13 @@ class authController extends Controller
     /*
     | Create
     -------------------- */
-    public function create(Request $request)
-    {
-        $request -> validate([
+    public function create(Request $request) {
+        $request->validate([
             'fullName' => 'required',
             'email' => 'required|unique:admin',
             'password' => 'required',
         ]);
-        
+
         $user = Admin::create([
             'fullname' => $request['fullname'],
             'email' => $request['email'],
@@ -36,7 +34,7 @@ class authController extends Controller
             'is_active' => 1
         ]);
 
-        if($user) {
+        if ($user) {
             return back()->with('success', 'Successfully created!');
         } else {
             return back()->with('fail', 'Something went wrong');
@@ -46,24 +44,23 @@ class authController extends Controller
     /*
     | Authenticate
     -------------------- */
-    public function authentication(Request $request)
-    {
+    public function authentication(Request $request) {
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
-   
-        $user = Admin::where('email', '=', $request -> email) -> first();
-        if(!$user) {
+
+        $user = Admin::where('email', '=', $request->email)->first();
+        if (!$user) {
             return back()->with('fail', 'User does not exist');
         }
         try {
-            $decrypted_password = Crypt::decryptString($user -> password);
-            if($decrypted_password === $request -> password) {
-                $request -> session() -> put('user', (object)[
-                    "id" => $user -> id,
-                    "username" => $user -> email,
-                    "fullname" => $user -> fullname,
+            $decrypted_password = Crypt::decryptString($user->password);
+            if ($decrypted_password === $request->password) {
+                $request->session()->put('user', (object)[
+                    "id" => $user->id,
+                    "username" => $user->email,
+                    "fullname" => $user->fullname,
                 ]);
                 return redirect('/admin/');
             }
@@ -76,9 +73,9 @@ class authController extends Controller
     /*
     | Signout
     -------------------- */
-    public function logout() {  
-        if(session() -> has('user')) {
-            session() -> pull('user');
+    public function logout() {
+        if (session()->has('user')) {
+            session()->pull('user');
             return redirect('/admin/signin');
         }
     }
