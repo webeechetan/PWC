@@ -136,7 +136,7 @@
                         <!-- | Result after 1st Meeting | -->
                         <div class="p-3 border shadow-sm">
                             <div class="mb-2">
-                                <h5 class="mb-0">Stage 2: <span class="text-secondary">1st Meeting Result</span></h5>
+                                <h5 class="mb-0">Stage 2: <span class="text-secondary">Interested after 1st physical meeting</span></h5>
                             </div>
                             <div class="mb-1">
                                 <div class="fs-6 card bg-primary p-2">
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    {{-- <div class="col-sm-6 mb-3">
                         <!-- | Result after 2nd Meeting | -->
                         <div class="p-3 border shadow-sm">
                             <div class="mb-2">
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-sm-6">
                         <!-- | Final Result | -->
                         <div class="p-3 border shadow-sm">
