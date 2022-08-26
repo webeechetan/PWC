@@ -21,7 +21,7 @@ class dashboardController extends Controller
         $table .= "<th style='background-color:#a3d4ff; color:#ffffff;'>Company Representatives</th>";
         $startups = Startup::where('is_active','1')->orderByRaw('cast(id as unsigned) ASC')->get();
         foreach ($startups as $startup) {
-            $table .= "<th colspan='4' style='background-color:#ff8c8a; color:#ffffff;'>" . $startup->company_name . "</th>";
+            $table .= "<th colspan='3' style='background-color:#ff8c8a; color:#ffffff;'>" . $startup->company_name . "</th>";
         }
         $table .= "</tr>";
         $table .= "<tr>";
@@ -29,8 +29,8 @@ class dashboardController extends Controller
         $table .= "<td></td>";
         for ($i = 0; $i < count($startups); $i++) {
             $table .= "<td>Screening Result</td>";
-            $table .= "<td>1st Meeting Result</td>";
-            $table .= "<td>2nd Meeting Result</td>";
+            $table .= "<td>Interested after 1st physical meeting</td>";
+            // $table .= "<td>2nd Meeting Result</td>";
             $table .= "<td>Final Result</td>";
         }
         $table .= "</tr>";
@@ -64,13 +64,13 @@ class dashboardController extends Controller
                             $data['meeting1'] = 'N';
                         }
                     }
-                    if ($f->stage == 'meeting2') {
-                        if ($f->approved == 1) {
-                            $data['meeting2'] = 'Y';
-                        } else if($f->approved == '2') {
-                            $data['meeting2'] = 'N';
-                        }
-                    }
+                    // if ($f->stage == 'meeting2') {
+                    //     if ($f->approved == 1) {
+                    //         $data['meeting2'] = 'Y';
+                    //     } else if($f->approved == '2') {
+                    //         $data['meeting2'] = 'N';
+                    //     }
+                    // }
                 }
                 if ($data['screening']) {
                     $table .= "<td>" . $data['screening'] . "</td>";
@@ -82,11 +82,11 @@ class dashboardController extends Controller
                 } else {
                     $table .= "<td style='background-color:#f0951f; color:#ffffff;'>" . $data['meeting1'] . "</td>";
                 }
-                if ($data['meeting2']) {
-                    $table .= "<td>" . $data['meeting2'] . "</td>";
-                } else {
-                    $table .= "<td style='background-color:#f0951f; color:#ffffff;'>" . $data['meeting2'] . "</td>";
-                }
+                // if ($data['meeting2']) {
+                //     $table .= "<td>" . $data['meeting2'] . "</td>";
+                // } else {
+                //     $table .= "<td style='background-color:#f0951f; color:#ffffff;'>" . $data['meeting2'] . "</td>";
+                // }
                 $table .= "<td></td>";
             }
             $table .= "</tr>";

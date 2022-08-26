@@ -145,8 +145,7 @@
                     <th>Company TYPE</th>
                     <th>Company SIZE</th>
                     <th>RESULT AFTER SCREENING</th>
-                    <th>RESULT AFTER 1ST MEETING</th>
-                    <th>RESULT AFTER 2ST MEETING</th>
+                    <th>INTERESTED AFTER 1ST PHYSICAL MEETING</th>
                     <th>FINAL RESULT</th>
                 </tr>
                 <tbody id='startupsData'>
@@ -231,10 +230,9 @@
        return (sa);
    }
 
-   let app_url = '{{env('APP_URL')}}'
-   console.log(app_url);
    window.onload = function (){
-       $.get(app_url+'/admin/startup?request=table',function(data,status){
+       $.get("/admin/startup?request=table",function(data,status){
+            // console.log(data);
            let tr = '';
            let i = 0;
            for(x of data){
@@ -269,15 +267,15 @@
                     tr += '<td>Y='+up+' N='+down+'</td>';
                     up=0;
                     down=0;
-                    for(y of x.meeting2){
-                        if(y.approved==1){
-                            up++;
-                        }
-                        if(y.approved==2){
-                            down++;
-                        }
-                    }
-                    tr += '<td>Y='+up+' N='+down+'</td>';
+                    // for(y of x.meeting2){
+                    //     if(y.approved==1){
+                    //         up++;
+                    //     }
+                    //     if(y.approved==2){
+                    //         down++;
+                    //     }
+                    // }
+                    // tr += '<td>Y='+up+' N='+down+'</td>';
                     tr += '<td>Pending</td>';
                 tr += '</tr>';
 

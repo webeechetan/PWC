@@ -17,7 +17,7 @@ customHeader.append("Access-Control-Allow-Origin", "*")
 customHeader.append('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'))
 
 const method = type || 'POST';
-let url = addonUrl || 'http://localhost/PWC/public/';
+let url = addonUrl || 'http://127.0.0.1:8000/';
 let request = url+page;
 const raw = params || '';
 const myHeaders = header || customHeader;
