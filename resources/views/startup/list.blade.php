@@ -194,7 +194,7 @@
                         <!-- | Final Result | -->
                         <div class="p-3 border shadow-sm">
                             <div class="col-12 mb-2">
-                                <h5 class="mb-0">Stage 4: <span class="text-secondary">Final Result</span></h5>
+                                <h5 class="mb-0">Stage 3: <span class="text-secondary">Final Result</span></h5>
                             </div>
                             <div class="mb-1">
                                 <div class="fs-6 card bg-primary p-2">
