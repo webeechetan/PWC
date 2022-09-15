@@ -52,7 +52,7 @@
 
                 <div class="col-12 text-end">
 
-                    {{-- <a href="{{env('APP_URL')}}/admin/startup/downloadexcel/{{$data->id}}?_token={{ csrf_token() }}" class="btn btn-sm btn-outline-success mx-2" data-download="excel">Download Company Info</a> --}}
+                     <a href="{{env('APP_URL')}}/admin/startup/downloadexcel/{{$data->id}}?_token={{ csrf_token() }}" class="btn btn-sm btn-outline-success mx-2" data-download="excel">Download Company Info</a> 
 
                     <button type="button" class="btn btn-sm btn-outline-success" data-download="pdf">Download PDF</button>
 
@@ -142,7 +142,11 @@
 
                                     <th>{{$key+1}}</th>
 
-                                    <th>{{$vote ->companyName->company_name}}</th>
+                                    <th>
+                                        @if($vote->companyName)
+                                            {{$vote ->companyName->company_name}}
+                                        @endif
+                                    </th>
 
                                     <th>
 
@@ -176,8 +180,10 @@
 
                                     <th>{{$key+1}}</th>
 
-                                    <th>{{$vote ->companyName->company_name}}</th>
-
+                                    <th>
+                                    @if($vote->companyName)
+                                        {{$vote ->companyName->company_name}}</th>
+                                    @endif
                                     <th>
 
                                         @if($vote -> approved === 1)
@@ -211,8 +217,10 @@
 
                                     <th>{{$key+1}}</th>
 
-                                    <th>{{$vote ->companyName->company_name}}</th>
-
+                                    <th>
+                                    @if($vote->companyName)    
+                                        {{$vote ->companyName->company_name}}</th>
+                                    @endif
                                     <th>
 
                                         @if($vote -> approved === 1)

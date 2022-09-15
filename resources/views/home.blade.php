@@ -23,24 +23,70 @@
 <section class="counter-sec bg-primary sec-space">
     <div class="container-fluid">
         <div class="row counters">
-            <div class="col-sm-6 col-md-3 mb-4">
+            <div class="
+            col-sm-6 
+            @if($data->id == 1)
+            col-md-3 
+            @else
+            col-md-4
+            @endif
+            mb-4
+            ">
                 <div class="counter-item">
-                    <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count1}}">{{$data->s1_count1}}</b>+</span> {{$data->s1_heading1}}</p>
+                    @if($data->id == 1)
+                        <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count1}}">{{$data->s1_count1}}</b>+</span> {{$data->s1_heading1}}</p>
+                    @else
+                        <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count1}}">{{$data->s1_count1}}</b>+</span> {{$data->s1_heading1}}</p>
+                    @endif
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3 mb-4">
+            <div class="
+            col-sm-6 
+            @if($data->id == 1)
+            col-md-3
+            @else
+            col-md-4
+            @endif
+            mb-4
+            ">
                 <div class="counter-item">
+                @if($data->id == 1)
                     <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count2}}">{{$data->s1_count2}}</b>+</span>  {{$data->s1_heading2}}</p>
+                @else
+                    <p class="text-big text-white mb-0 mt-4">{{$data->s1_heading2}}</p>
+                @endif 
+                    
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3 mb-4 mb-md-0">
+            <div class="
+            col-sm-6 
+            @if($data->id == 1)
+            col-md-3 
+            @else
+            col-md-4
+            @endif
+            mb-4">
                 <div class="counter-item">
+                @if($data->id == 1)
                     <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count3}}">{{$data->s1_count3}}</b>+</span> {{$data->s1_heading3}}</p>
+                @else
+                    <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count3}}">{{$data->s1_count3}}</b>+</span> {{$data->s1_heading3}}</p>
+                @endif
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">
+            <div class="
+            col-sm-6 
+            @if($data->id == 1)
+            col-md-3 
+            @else
+            col-md-4
+            @endif
+            mb-4">
                 <div class="counter-item">
-                    <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count4}}">{{$data->s1_count4}}</b>+</span> {{$data->s1_heading4}}</p>
+                @if($data->id == 1)
+                <p class="text-big text-white mb-0"><span class="text-green"><b class="counters-value" data-count="{{$data->s1_count4}}">{{$data->s1_count4}}</b>+</span> {{$data->s1_heading4}}</p>
+                @else
+                @endif
                 </div>
             </div>
         </div>
@@ -130,7 +176,11 @@
                                 <img class="case-over" src="/assets/images/case-overlay.png">
                             </div>
                             <div class="case-text">
-                                <div><p>{{$case->title}}</p></div>
+                                <div>
+                                    <p>
+                                        {{$case->title}}
+                                    </p>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -151,6 +201,50 @@
     </div>
     <div class="case-black-space"></div>
 </section>
+@if($data->season_id != '1')
+<!-- Knowledge Sharing Section -->
+<section class="case-study bg-primary sec-space pb-0">
+    <div class="case-study-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 mx-auto text-md-center mb-4 mb-md-5">
+                <h4 class="sub-title text-green">{{$data->knowledge_title}}</h4>
+                <h3 class="title text-white">{{$data->knowledge_subtitle}}</h3>
+                </div>
+            </div>
+            @if(count($KnowledgeSharing) > 0)
+            <div class="row">
+                @foreach($KnowledgeSharing as $knowledge)
+                <div class="col-md-4">
+                    <div class="case-item">
+                        <a @if(session()->has('startup') || session()->has('pilot')) href="/knowledge_sharing/{{$knowledge->id}}" @endif >
+                            <div class="case-img">
+                                <img src="{{ asset('uploads/knowledge_sharing') }}/{{ $knowledge->overview_image }}">
+                                <img class="case-over" src="{{ asset('uploads/knowledge_sharing') }}/{{ $knowledge->banner_image }}">
+                            </div>
+                            <div class="case-text">
+                                <div><p>{{$knowledge->title}}</p></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+                <div class="col-12 text-center mt-4 mt-md-5">
+                    <a @if(session()->has('startup') || session()->has('pilot')) href="{{env('APP_URL')}}/knowledge_sharing" @endif  class="btn btn-green">View All <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            @else
+                <div class="row justify-content-center align-items-center" style="height: 300px;">
+                    <div class="col-lg-6 text-center text-white card bg-primary">
+                        <h2 class="py-3">Coming Soon</h2>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+    <div class="case-black-space"></div>
+</section>
+@endif
 <!-- Get In Touch -->
 <section class="getInTouch sec-space">
     <div class="container">

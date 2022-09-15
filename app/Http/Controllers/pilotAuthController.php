@@ -127,7 +127,7 @@ class pilotAuthController extends startupAuthController
     public function viewPilot(Request $request){
         
         $data = pilotCompanies::where('id',$request->id)->with('members','approvedCompany')->first();
-        $approvedData = [];
+        $approvedData = []; 
         $temp = "";
         $tempArray = [];
         

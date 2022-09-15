@@ -4,25 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomePage;
+use App\Models\Season;
 
 class homepageController extends Controller
 {
-    /*
-    | Index
-    -------------- */
-    public function index()
-    {
-        $HomePage = HomePage::findOrFail(1);
-        if($HomePage) return view('admin.pages.homepage', ["homepage" => $HomePage]);
+
+    public $current_active_season;
+
+    public function __construct(){
+        $this->current_active_season = Season::where('is_active','1')->first(); 
     }
 
     /*
+    | Index
+    -------------- */
+    public function index($season_id = 0)
+    {
+        if($season_id){
+            $HomePage = HomePage::where('season_id',$season_id)->first();
+        }else{
+            $HomePage = HomePage::where('season_id',$this->current_active_season->id)->first();
+        }
+        $seasons = season::all();
+        if($HomePage) return view('admin.pages.homepage', ["homepage" => $HomePage,'seasons'=>$seasons]);
+    }
+
+    /* 
     | Update 
     -------------- */
     public function update(Request $request) {
+
         $success = false;
         $message = "Something went wrong";
-        $HomePage = HomePage::findOrFail(1);
+        $HomePage = HomePage::findOrFail($request->id);
         if($HomePage)
         {
             // if(!$Event) return redirect() -> back();
@@ -106,6 +120,14 @@ class homepageController extends Controller
                     ]);
                     $HomePage -> case_study_title = $request['case_study_title'];
                     $HomePage -> case_study_subtitle = $request['case_study_subtitle'];
+                    break;
+                case 'knowledge_sharing':
+                    $request->validate([
+                        'knowledge_title' => 'required',
+                        'knowledge_subtitle' => 'required',
+                    ]);
+                    $HomePage -> knowledge_title = $request['knowledge_title'];
+                    $HomePage -> knowledge_subtitle = $request['knowledge_subtitle'];
                     break;
                 case "s3":
                     $request->validate([

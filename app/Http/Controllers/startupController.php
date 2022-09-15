@@ -158,7 +158,7 @@ class startupController extends Controller {
                         ]);
                     return $query;
                 }
-            ])->get()->first();
+            ])->withoutGlobalScope(SeasonScope::class)->get()->first();
         // echo json_encode($startup);
         // die();
         return view('admin.startup.view', ["data" => $startup]);
@@ -428,7 +428,7 @@ class startupController extends Controller {
         $success = false;
         $message = "Something went wrong";
 
-        $Startup = Startup::findOrFail(request()->id);
+        $Startup = Startup::withoutGlobalScope(SeasonScope::class)->findOrFail(request()->id);
         if ($Startup) {
             $approved = $request->query('approved');
             $approved = in_array((int)$approved, [1, 2]) ? (int)$approved : 0;
@@ -547,7 +547,6 @@ class startupController extends Controller {
 
     public function startupListBySeason(Request $request) {
         $data = $this->startuplistFilter($request);
-        // dd($data);
         $seasons = Season::all();
         $data['seasons'] = $seasons;
         return view('startup.list', $data);

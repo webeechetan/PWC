@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use App\Jobs\SendEmailJob;
 use Illuminate\Support\Facades\Mail;
 use App\Events\EventMail;
+use App\Http\Controllers\KnowledgeSharingController;
 
 
 /*
@@ -65,9 +66,12 @@ Route::get('/queue',function(){
 |Website
 -------- --- */
 Route::get('/', [websiteController::class, 'index']);
+Route::get('/season/{id}', [websiteController::class, 'index'])->name('season.id');
 Route::get('/case-studies', [websiteController::class, 'caseStuides']);
 Route::get('/case-studies/{id}', [websiteController::class, 'viewCaseStuides']);
 Route::post('/contact', [contactController::class, 'update']);
+Route::get('/knowledge_sharing',[websiteController::class,'knowledgeSharing']);
+Route::get('/knowledge_sharing/{id}',[websiteController::class,'viewKnowledgeSharing']);
 
 /*
 |Website All Session Middle
@@ -172,7 +176,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
 
         // Home Page
         Route::get('admin/homepage/', [homepageController::class, 'index']);
-        Route::get('admin/homepage/edit/{id}', [homepageController::class, 'update']);
+        Route::get('admin/homepage/season/{season_id}', [homepageController::class, 'index'])->name('homepage.edit.with.season.id');
         Route::post('admin/homepage/edit/{id}', [homepageController::class, 'update']);
         
         // Footer
@@ -201,6 +205,17 @@ Route::group(['middleware'=>['AuthCheck']], function(){
         Route::get('admin/season', [SeasonController::class, 'index']);
         Route::post('admin/season', [SeasonController::class, 'store'])->name('season.store');
         Route::get('admin/season/change_status/{id}/{status}', [SeasonController::class, 'change_status'])->name('season.change_status');
+
+        // Knowledge Sharing
+        
+        Route::get('admin/knowledge_sharing',[KnowledgeSharingController::class,'index'])->name('knowledge_sharing.list');
+        Route::get('admin/knowledge_sharing/add',[KnowledgeSharingController::class,'create'])->name('knowledge_sharing.create');
+        Route::post('admin/knowledge_sharing/add',[KnowledgeSharingController::class,'store'])->name('knowledge_sharing.store');
+        Route::get('admin/knowledge_sharing/edit/{id?}',[KnowledgeSharingController::class,'edit'])->name('knowledge_sharing.edit');
+        Route::post('admin/knowledge_sharing/update',[KnowledgeSharingController::class,'update'])->name('knowledge_sharing.update');
+        Route::get('admin/knowledge_sharing/delete/{id}',[KnowledgeSharingController::class,'destroy'])->name('knowledge_sharing.delete');
+        Route::get('admin/knowledge_sharing/id/{id}/delete_image/{image_name}',[KnowledgeSharingController::class,'delete_image'])->name('knowledge_sharing.delete_image');
+
     });
 });
 

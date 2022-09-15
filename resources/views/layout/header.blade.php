@@ -46,7 +46,11 @@
                                         <li><a class="nav-link" href="{{env('APP_URL')}}/myaccount">My Account</a></li>
                                     @endif
                                     <!--<li class="nav-item d-none d-lg-inline-block"> <a href="javascript:void(0)"><img src="{{env('APP_URL')}}/assets/images/search.png"></a></li>-->
-                                    
+                                    @isset($seasons)
+                                        @foreach($seasons as $season)
+                                            <li class="nav-item"> <a class="nav-link" href="{{ route('season.id',$season->id) }}">{{ $season->season }}</a></li>
+                                        @endforeach 
+                                    @endisset
                                 </ul>
                             </div>
                         </nav>

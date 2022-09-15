@@ -7,17 +7,31 @@ use App\Models\Case_Studies;
 use App\Models\Event;
 use App\Models\EventRegister;
 use App\Models\HomePage;
+use App\Models\KnowledgeSharing;
+use App\Models\Season;
 use Illuminate\Support\Facades\DB;
 
 class websiteController extends Controller
 {
-    public function index() {
-        $homepage = HomePage::findorFail(1);
+    public $current_active_season;
+
+    public function __construct(){
+        $this->current_active_season = Season::where('is_active','1')->first(); 
+    }
+
+    public function index($season_id = 0) {
+        if($season_id){
+            $homepage = HomePage::where('season_id',$season_id)->first();
+        }else{
+            $homepage = HomePage::findorFail(1);
+        }
         $upcomingevent = [];
         $upcomingevent = $this->upcomingEvent()->orderBy('event_from', 'ASC');
         $upcomingevent = $upcomingevent->take(3)->get();
         $caseStudies = Case_Studies::all()->take(3);
-        return view('home', ["data" => $homepage, "upcomingevent" => $upcomingevent, "caseStudies" => $caseStudies]);
+        $KnowledgeSharing = KnowledgeSharing::all()->take(3);
+        $seasons = Season::all();
+        return view('home', ["data" => $homepage, "upcomingevent" => $upcomingevent, "caseStudies" => $caseStudies, "KnowledgeSharing"=>$KnowledgeSharing,'seasons'=>$seasons]);
     }
 
     public function caseStuides() {
@@ -40,6 +54,25 @@ class websiteController extends Controller
         {
             return view('case_studies/view', ['case' => $case]);
         }
+    }
+
+    public function knowledgeSharing(){
+        $KnowledgeSharing = KnowledgeSharing::all();
+        $recent = KnowledgeSharing::orderBy('created_at', 'DESC')->offset(0)->limit(1)->get()->first();
+        
+        $event = $this->upcomingEvent()->orderBy('event_from', 'ASC')->get();
+        // print_r(json_encode($event));
+        // die();
+        return view('knowledge_sharing.index',[
+            'KnowledgeSharing' => $KnowledgeSharing, 
+            'event' => $event, 
+            "recent" => $recent
+        ]); 
+    }
+
+    public function viewKnowledgeSharing($id){
+        $KnowledgeSharing = KnowledgeSharing::find($id);
+        return view('knowledge_sharing.view',compact('KnowledgeSharing'));
     }
 
     public function event() {

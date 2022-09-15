@@ -51,7 +51,6 @@
             <div class="row"  data-target="download-pdf">
 
                 <div class="col-12 text-end">
-
                     <a href="{{env('APP_URL')}}/admin/startup/downloadexcel/{{$data->id}}?_token={{ csrf_token() }}" class="btn btn-sm btn-outline-success mx-2" data-download="excel">Download Company Info</a>
 
                     <button type="button" class="btn btn-sm btn-outline-success" data-download="pdf">Download PDF</button>
@@ -268,40 +267,6 @@
                                         @endif
 
                                         @if($meet1 -> approved === 2)
-
-                                            <span class="text-danger">- 1</span>
-
-                                        @endif
-
-                                    </th>
-
-                                </tr>
-
-                                @endforeach
-
-                                <tr>
-
-                                    <th class="text-center text-primary" colspan="3">Meeting 2</th>
-
-                                </tr>
-
-                                @foreach($data -> meeting2 as $key => $meet2)
-
-                                <tr>
-
-                                    <th>{{$key+1}}</th>
-
-                                    <th>{{$meet2 -> pilot_companies -> name ?? 'PILOT COMPANY'}}</th>
-
-                                    <th>
-
-                                        @if($meet2 -> approved === 1)
-
-                                            <span class="text-success">+ 1</span>
-
-                                        @endif
-
-                                        @if($meet2 -> approved === 2)
 
                                             <span class="text-danger">- 1</span>
 

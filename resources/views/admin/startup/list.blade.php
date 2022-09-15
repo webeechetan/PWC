@@ -204,7 +204,11 @@
         sortable: true,
         formatter: (value, row, index) => {
             // console.log(row.startup_login);
-            return row.startup_login.fullname;
+            if(row.startup_login){
+                return row.startup_login.fullname;
+            }else{
+                return null;
+            }
         }
     }, {
         field: 'Downloads',

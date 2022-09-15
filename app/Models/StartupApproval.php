@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Startup;
+use App\Scopes\SeasonScope;
 
 class StartupApproval extends Model
 {
@@ -23,6 +24,6 @@ class StartupApproval extends Model
     }
 
     public function companyName(){
-        return $this->belongsTo(Startup::class, 'startup_id','id');
+        return $this->belongsTo(Startup::class, 'startup_id','id')->withoutGlobalScope(SeasonScope::class);
     }
 }

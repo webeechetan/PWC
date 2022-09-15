@@ -23,6 +23,9 @@
         </div>
         <!-- Content Body -->
         <div class="">
+            @foreach($seasons as $season)
+                <a class="btn btn-primary btn-sm" href="{{ route('homepage.edit.with.season.id',$season->id) }}">{{ $season->season }}</a>
+            @endforeach
             <!-- 
             |Banner
             ----------- -->
@@ -100,6 +103,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="banner" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="banner_btn">Update</button>
                     </div>
                 </div>
@@ -172,6 +176,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="s1" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="s1_btn">Update</button>
                     </div>
                 </div>
@@ -230,6 +235,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="s2" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="s2_btn">Update</button>
                     </div>
                 </div>
@@ -264,6 +270,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="event" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="event_btn">Update</button>
                     </div>
                 </div>
@@ -298,11 +305,49 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="case_study" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="case_study_btn">Update</button>
                     </div>
                 </div>
             </form>
             
+            
+            <!-- 
+            |Knowledge Sharing
+            ----------- -->
+            <div class="row mb-3">
+                <div class="col">
+                    <h4 class="mt-4 text-white p-3 bg-primary">Knowledge Sharing</h4>
+                </div>
+            </div>
+            <form name="knowledge_sharing">
+                @csrf()
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="m-0">Title</label>
+                            <input type="text" name="knowledge_title" class="form-control" value="{{$homepage->knowledge_title}}">
+                            <small class="text-danger" data-error-home="knowledge_title"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="m-0">Sub Title</label>
+                            <input type="text" name="knowledge_subtitle" class="form-control" value="{{$homepage->knowledge_subtitle}}">
+                            <small class="text-danger" data-error-home="knowledge_subtitle"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <input type="hidden" value="knowledge_sharing" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
+                        <button type="submit" class="btn btn-sm btn-primary" name="knowledge_sharing_btn">Update</button>
+                    </div>
+                </div>
+            </form>
+            
+
             <!-- 
             |Section 3
             ----------- -->
@@ -366,6 +411,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <input type="hidden" value="s3" name="section">
+                        <input type="hidden" value="{{ $homepage->id }}" name="id">
                         <button type="submit" class="btn btn-sm btn-primary" name="s3_btn">Update</button>
                     </div>
                 </div>
@@ -436,7 +482,7 @@
         })
         .catch(err => event.target[`${event.target.name}_btn`].innerHTML = "Update");
     }
-    const formVariable = ["banner", "s1", "s2", "s3", "event", "case_study"];
+    const formVariable = ["banner", "s1", "s2", "s3", "event", "case_study","knowledge_sharing"];
     formVariable.map(e => {
         document.forms[e].addEventListener("submit", updateList);
     })

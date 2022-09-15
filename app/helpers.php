@@ -270,6 +270,23 @@ function getMenu(){
                                         'action' => 'create'
                                     ]]
                     ],
+        'Knowledge Sharing' => [
+                        'position' => 1,
+                        'url' => '',
+                        'icon' => 'la la-book',
+                        'Module' => [[
+                                        'name' => 'All Knowledge Sharing',
+                                        'url' => $path.'knowledge_sharing/',
+                                        'slug' => 'knowledge_sharing',
+                                        'action' => 'index'
+                                    ],
+                                    [
+                                        'name' => 'Add Knowledge Sharing',
+                                        'url' => $path.'knowledge_sharing/add',
+                                        'slug' => 'knowledge_sharing',
+                                        'action' => 'create'
+                                    ]]
+                    ],
         'Event' => [
                         'position' => 1,
                         'url' => '',
